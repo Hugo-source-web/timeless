@@ -3,19 +3,17 @@ import prisma from "@/lib/prisma";
 
 export async function POST(
   request: NextRequest,
-  context: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
-  const id = parseInt(context.params.id, 10);
+  const { id } = await context.params;   // <-- IMPORTANT
 
   try {
-    // Delete media assets linked to the vehicle
     await prisma.mediaAsset.deleteMany({
-      where: { vehicleId: id },
+      where: { vehicleId: Number(id) },
     });
 
-    // Delete the vehicle itself
     await prisma.vehicle.delete({
-      where: { id },
+      where: { id: Number(id) },
     });
 
     return NextResponse.redirect("/admin/vehicles");
