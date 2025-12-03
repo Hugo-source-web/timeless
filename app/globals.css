@@ -1,0 +1,126 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@keyframes fadeOverlay {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer utilities {
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }
+
+  .animate-fadeInUp {
+    animation: fadeInUp 0.8s ease-out forwards;
+    animation-delay: var(--delay, 0ms);
+  }
+}
+
+@layer utilities {
+  @keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(40px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeInDown {
+    0% { opacity: 0; transform: translateY(-40px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-fadeUp {
+    opacity: 0;
+    animation: fadeInUp 0.9s ease-out forwards;
+  }
+
+  .animate-fadeDown {
+    opacity: 0;
+    animation: fadeInDown 0.9s ease-out forwards;
+  }
+}
+
+
+.animate-fadeOverlay {
+  animation: fadeOverlay 0.35s ease-out forwards;
+}
+
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+main {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+/* --- Reflective Logo Hover Effect --- */
+
+.reflective-logo {
+  position: relative;
+  color: rgba(255, 255, 255, 0.07);
+  mix-blend-mode: screen;
+  filter: blur(0.5px);
+}
+
+.reflective-logo::before {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    200px circle at var(--x, 50%) var(--y, 50%),
+    rgba(255, 255, 255, 0.85),
+    rgba(255, 255, 255, 0.0) 60%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font: inherit;
+  pointer-events: none;
+  transition: opacity 0.2s ease-out;
+  opacity: 0;
+}
+
+.reflective-logo:hover::before {
+  opacity: 1;
+}
