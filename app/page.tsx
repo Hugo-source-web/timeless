@@ -25,7 +25,6 @@ export default async function HomePage() {
       media: {
         where: {
           type: "IMAGE",
-          isHero: true,
         },
         orderBy: {
           sortOrder: "asc",
