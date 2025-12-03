@@ -2,11 +2,18 @@
 
 import { useEffect, useRef, useState } from "react";
 
+type AnimatedCounterProps = {
+  target: number;
+  duration?: number;
+  suffix?: string;
+};
+
 export default function AnimatedCounter({
   target,
   duration = 1500,
   suffix = "",
-}) {
+}: AnimatedCounterProps) {
+
   const [value, setValue] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
   const hasAnimated = useRef(false);
