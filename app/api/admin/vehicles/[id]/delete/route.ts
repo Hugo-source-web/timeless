@@ -1,14 +1,19 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
-export async function POST(req: Request, { params }: { params: { id: string } }) {
-  const id = parseInt(params.id);
+export async function POST(
+  request: NextRequest,
+  context: { params: { id: string } }
+) {
+  const id = parseInt(context.params.id, 10);
 
   try {
+    // Delete media assets linked to the vehicle
     await prisma.mediaAsset.deleteMany({
       where: { vehicleId: id },
     });
 
+    // Delete the vehicle itself
     await prisma.vehicle.delete({
       where: { id },
     });
