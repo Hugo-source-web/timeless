@@ -58,7 +58,7 @@ function drawWrappedText({
 
 export async function GET(
   _req: NextRequest,
-  context: { params: { slug: string } }
+  context: { params: Promise<{ slug: string }> }
 ) {
   try {
     // ESM import — THIS is the correct one
