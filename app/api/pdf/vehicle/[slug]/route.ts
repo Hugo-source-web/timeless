@@ -11,14 +11,13 @@ export async function GET(
   const url = `${process.env.NEXT_PUBLIC_BASE_URL}/vehiculos/${slug}/pdf`;
 
   // Required for Vercel serverless
-  const executablePath = await chromium.executablePath;
+  const executablePath = (await chromium.executablePath) as unknown as string;
 
   const browser = await puppeteer.launch({
     args: chromium.args,
-    executablePath: (executablePath ?? undefined) as unknown as string | undefined,
+    executablePath,
     headless: true,
   });
-
 
 
 
