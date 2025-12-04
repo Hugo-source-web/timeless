@@ -25,9 +25,14 @@ export async function GET(
   // Infer the correct MediaAsset type from the returned object
   type MediaAssetType = (typeof vehicle.media)[number];
 
-  const heroImage =
+  const heroImageRel =
     vehicle.media.find((m: MediaAssetType) => m.isHero)?.url ??
     "/placeholder.jpg";
+
+  const heroImage = heroImageRel.startsWith("http")
+    ? heroImageRel
+    : `${process.env.NEXT_PUBLIC_BASE_URL}${heroImageRel}`;
+
 
   // Rebuild the sections array based on your PDFPage code
   const sections = [
