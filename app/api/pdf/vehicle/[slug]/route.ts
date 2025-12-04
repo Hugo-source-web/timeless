@@ -1,6 +1,8 @@
-import chromium from "@sparticuz/chromium";
-import puppeteer from "puppeteer-core";
 import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { renderToBuffer } from "@react-pdf/renderer";
+import { PdfSpecSheet } from "@/components/PdfSpecSheet";
+import { createElement } from "react";
 
 export async function GET(
   _req: Request,
@@ -8,34 +10,49 @@ export async function GET(
 ) {
   const { slug } = await context.params;
 
-  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/vehiculos/${slug}/pdf`;
-
-  // Required for Vercel serverless
-  const executablePath = (await chromium.executablePath) as unknown as string;
-
-  const browser = await puppeteer.launch({
-    args: chromium.args,
-    executablePath,
-    headless: true,
+  const vehicle = await prisma.vehicle.findUnique({
+    where: { slug },
+    include: { media: true, dealership: true },
   });
 
+  if (!vehicle) {
+    return NextResponse.json(
+      { error: "Vehículo no encontrado" },
+      { status: 404 }
+    );
+  }
 
+  // Infer the correct MediaAsset type from the returned object
+  type MediaAssetType = (typeof vehicle.media)[number];
 
+  const heroImage =
+    vehicle.media.find((m: MediaAssetType) => m.isHero)?.url ??
+    "/placeholder.jpg";
 
-  const page = await browser.newPage();
-  await page.goto(url, { waitUntil: "networkidle0" });
+  // Rebuild the sections array based on your PDFPage code
+  const sections = [
+    {
+      title: "Performance",
+      rows: [
+        ["Power output", vehicle.powerTotalHp ? `${vehicle.powerTotalHp} hp` : null],
+        ["Maximum speed", vehicle.maxSpeedLimitedKmh ? `${vehicle.maxSpeedLimitedKmh} km/h` : null],
+        ["Mass (DIN)", vehicle.massDinKg ? `${vehicle.massDinKg} kg` : null],
+        ["Electric-only range (WLTP)", vehicle.electricRangeWltpKm ? `${vehicle.electricRangeWltpKm} km` : null],
+      ],
+    },
+    // add other sections here...
+  ];
 
-  const pdf = await page.pdf({
-    format: "A4",
-    printBackground: true,
-    margin: { top: "30px", bottom: "30px" },
-  });
+  // Generate PDF buffer
+  const pdfBuffer = await renderToBuffer(
+    createElement(PdfSpecSheet, {
+      vehicle,
+      sections,
+      heroImage,
+    })
+  );
 
-  await browser.close();
-
-  const buffer = Buffer.from(pdf);
-
-  return new NextResponse(buffer, {
+  return new NextResponse(new Uint8Array(pdfBuffer), {
     status: 200,
     headers: {
       "Content-Type": "application/pdf",
