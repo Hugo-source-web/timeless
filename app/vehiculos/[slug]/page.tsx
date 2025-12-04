@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import AnimatedCounter from "@/components/animatedCounter";
 import GallerySlider from "@/components/GallerySlider";
-import { neue2, neue6 } from "@/app/fonts/neuePlak";
+import { neue2, neue6 } from "@/public/fonts/neuePlak";
 import SpecSheet from "@/components/SpecSheet";
 import VehicleActions from "@/components/VehicleActions";
 

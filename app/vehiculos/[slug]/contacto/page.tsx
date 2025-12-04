@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import ContactClientWrapper from "@/components/ContactClientWrapper";
-import { neue6 } from "@/app/fonts/neuePlak";
+import { neue6 } from "@/public/fonts/neuePlak";
 
 interface ContactPageProps {
   params: { slug: string };

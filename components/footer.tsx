@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { timelessFont } from "@/app/fonts/timeless";
+import { timelessFont } from "@/public/fonts/timeless";
 
 export default function Footer() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });

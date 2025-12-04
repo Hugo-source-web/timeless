@@ -1,4 +1,4 @@
-import { neue6, neue5 } from "@/app/fonts/neuePlak";
+import { neue6, neue5 } from "@/public/fonts/neuePlak";
 import SpecSection from "./SpecSection";
 import type { Vehicle } from "@prisma/client";
 

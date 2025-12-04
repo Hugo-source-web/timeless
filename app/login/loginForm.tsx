@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { timelessFont } from "../fonts/timeless";
+import { timelessFont } from "../../public/fonts/timeless";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 

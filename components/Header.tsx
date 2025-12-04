@@ -2,7 +2,7 @@
 
 import { Bars3Icon, UserCircleIcon } from "@heroicons/react/24/outline";
 import { useSidebar } from "@/context/SidebarContext";
-import { timelessFont } from "@/app/fonts/timeless";
+import { timelessFont } from "@/public/fonts/timeless";
 import { accountSection } from "@/lib/sidebarData";
 
 export default function Header() {

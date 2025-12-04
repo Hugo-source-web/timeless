@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { neue6 } from "@/app/fonts/neuePlak";
+import { neue6 } from "@/public/fonts/neuePlak";
 import useParallax from "./useParallax";
 
 export default function GallerySlider({ images }: { images: string[] }) {

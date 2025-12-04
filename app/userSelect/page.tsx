@@ -1,4 +1,4 @@
-import { neue8 } from "../fonts/neuePlak";
+import { neue8 } from "../../public/fonts/neuePlak";
 
 export default function AccessPortal() {
   return (

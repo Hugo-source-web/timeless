@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { timelessFont } from "@/app/fonts/timeless";
+import { timelessFont } from "@/public/fonts/timeless";
 
 export default async function PDFPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
