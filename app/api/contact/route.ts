@@ -4,12 +4,7 @@ import { Resend } from "resend";
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { name, email, phone, brand, model } = body;
-
-    // no formatting needed since SMS is gone, but you may keep this if you plan future use
-    const formattedPhone = phone.startsWith("+")
-      ? phone
-      : `+34${phone.replace(/\D/g, "")}`;
+    const { name, email, brand, model } = body;
 
     // --- RESEND ONLY ---
     const resend = new Resend(process.env.RESEND_API_KEY!);
