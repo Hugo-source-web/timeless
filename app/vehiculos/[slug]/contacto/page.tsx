@@ -46,8 +46,11 @@ export default async function VehicleContactPage({ params }: ContactPageProps) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-          <input id="email" className="border border-white/30 bg-transparent px-4 py-3 rounded-md text-white placeholder-white/40" placeholder="Dirección de email *" />
-          <input id="phone" className="border border-white/30 bg-transparent px-4 py-3 rounded-md text-white placeholder-white/40" placeholder="Número de teléfono móvil *" />
+          <input
+            id="email"
+            className="col-span-1 md:col-span-2 border border-white/30 bg-transparent px-4 py-3 rounded-md text-white placeholder-white/40"
+            placeholder="Dirección de email *"
+          />
         </div>
       </section>
 

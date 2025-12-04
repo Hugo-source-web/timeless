@@ -42,7 +42,8 @@ export default function ContactFormSubmit({
         throw new Error("Something went wrong");
       }
 
-      alert("¡Su solicitud ha sido enviada! Revise su correo y SMS.");
+      alert("¡Solicitud enviada! Le hemos enviado un correo de confirmación.");
+
     } catch (err) {
       console.error(err);
       alert("Hubo un problema enviando la solicitud.");
