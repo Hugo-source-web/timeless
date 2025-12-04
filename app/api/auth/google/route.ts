@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 
 export async function GET() {
   const clientId = process.env.GOOGLE_CLIENT_ID!;
-  const redirectUri = `${process.env.AUTH_URL}/api/auth/callback/google`;
+  const redirectUri = `${process.env.NEXTAUTH_URL}/api/auth/callback/google`;
 
   const params = new URLSearchParams({
     client_id: clientId,
