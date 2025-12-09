@@ -196,12 +196,10 @@ export default async function VehiclesPage(props: { searchParams?: Promise<Searc
                   Editar
                 </Link>
 
-                <form
-                  action={`/api/admin/vehicles/${v.id}/delete`}
-                  method="POST"
-                >
+                <form>
                   <button
-                    type="submit"
+                    formAction={`/api/admin/vehicles/${v.id}/delete`}
+                    formMethod="POST"
                     className="px-3 py-1 bg-red-800 rounded hover:bg-red-700 transition text-sm"
                   >
                     Eliminar
