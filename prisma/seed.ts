@@ -590,7 +590,7 @@ async function main() {
     ],
   });
 
-  console.log("✨ Seed completed! Visit /vehiculos/porsche-911-gt3");
+  console.log("Seeding completado, visita la pagina de busqueda o la sidebar para revisar que se han añadido correctamente!");
 }
 
 main()
