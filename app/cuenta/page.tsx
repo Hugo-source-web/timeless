@@ -15,12 +15,10 @@ export default function AccountPage() {
   return (
     <div className="min-h-screen bg-black text-white p-7 pt-18">
 
-      {/* Title */}
       <h1 className="text-3xl font-bold mb-8 tracking-wide">
         Mi Cuenta
       </h1>
 
-      {/* Tabs */}
       <div className="flex gap-6 border-b border-white/20 mb-8 pb-2">
         <button
           onClick={() => setTab("account")}
@@ -37,7 +35,6 @@ export default function AccountPage() {
         </button>
       </div>
 
-      {/* Content */}
       {tab === "account" ? (
         <AccountSection user={session.user} />
       ) : (

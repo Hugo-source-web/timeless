@@ -56,7 +56,6 @@ export default function AccountSection({ user }: { user: Session["user"] }) {
   return (
     <div className="space-y-10 max-w-md">
 
-      {/* Change Email */}
       <div>
         <h2 className="text-xl font-semibold mb-3">Correo electrónico</h2>
         <input
@@ -73,7 +72,6 @@ export default function AccountSection({ user }: { user: Session["user"] }) {
         </button>
       </div>
 
-      {/* Change Password */}
       <div>
         <h2 className="text-xl font-semibold mb-3">Contraseña</h2>
         <input
@@ -91,7 +89,6 @@ export default function AccountSection({ user }: { user: Session["user"] }) {
         </button>
       </div>
 
-      {/* Delete + Signout */}
       <div className="pt-6 border-t border-white/10">
         <button
           onClick={handleLogout}

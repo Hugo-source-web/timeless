@@ -61,7 +61,7 @@ export async function GET(
   context: { params: Promise<{ slug: string }> }
 ) {
   try {
-    // ESM import — THIS is the correct one
+  
     const { PDFDocument, StandardFonts, rgb } = await import("pdf-lib");
 
     const { slug } = await context.params;
@@ -74,18 +74,16 @@ export async function GET(
     if (!vehicle)
       return NextResponse.json({ error: "Vehículo no encontrado" }, { status: 404 });
 
-    // Create PDF
     const pdf = await PDFDocument.create();
     let page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
     let y = PAGE_HEIGHT - MARGIN;
 
-    // ---- CUSTOM FONT WITHOUT FONTKIT ----
-// ---- STANDARD FONTS (Vercel-safe, no fontkit required) ----
+ 
     const timelessFont = await pdf.embedFont(StandardFonts.HelveticaBold);
     const fontRegular = await pdf.embedFont(StandardFonts.Helvetica);
     const fontBold = await pdf.embedFont(StandardFonts.HelveticaBold);
 
-    // ---- TITLE ----
+
     const title = "TIMELESS";
     page.drawText(title, {
       x: PAGE_WIDTH / 2 - timelessFont.widthOfTextAtSize(title, 32) / 2,
@@ -96,7 +94,6 @@ export async function GET(
 
     y -= 20;
 
-    // Divider
     page.drawLine({
       start: { x: MARGIN, y },
       end: { x: PAGE_WIDTH - MARGIN, y },
@@ -106,7 +103,6 @@ export async function GET(
 
     y -= 30;
 
-    // ---- HERO IMAGE ----
     const hero = vehicle.media.find((m) => m.isHero)?.url;
 
     if (hero) {
@@ -137,7 +133,7 @@ export async function GET(
       }
     }
 
-    // ---- VEHICLE TITLE ----
+
     const vehicleTitle = `${vehicle.brand} ${vehicle.model} ${vehicle.variant ?? ""}`;
     page.drawText(vehicleTitle, {
       x: PAGE_WIDTH / 2 - fontBold.widthOfTextAtSize(vehicleTitle, 22) / 2,
@@ -157,7 +153,7 @@ export async function GET(
       color: rgb(0.3, 0.3, 0.3),
     });
 
-    // ---- START SPECS PAGE ----
+
     page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
     y = PAGE_HEIGHT - MARGIN;
 
@@ -301,13 +297,11 @@ export async function GET(
       const valid = section.rows.filter(([_, v]) => v !== null && v !== undefined);
       if (!valid.length) continue;
 
-      // PAGE BREAK BEFORE TITLE
       if (y < 120) {
         page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
         y = PAGE_HEIGHT - MARGIN;
       }
 
-      // SECTION HEADER
       page.drawRectangle({
         x: MARGIN,
         y: y - 4,
@@ -326,14 +320,12 @@ export async function GET(
 
       y -= 26;
 
-      // ---- ROW LOOP ----
       for (const [label, rawValue] of valid) {
         if (y < 60) {
           page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
           y = PAGE_HEIGHT - MARGIN;
         }
 
-        // Normalize values for safety
         const safeLabel = label ? String(label) : "";
         const value = rawValue !== null && rawValue !== undefined ? String(rawValue) : "";
 
@@ -342,7 +334,6 @@ export async function GET(
           safeLabel.toLowerCase().includes("description") ||
           safeLabel.toLowerCase().includes("summary");
 
-        // Draw label (unless empty)
         if (safeLabel.length > 0) {
           page.drawText(safeLabel, {
             x: ROW_LABEL_X,
@@ -353,7 +344,7 @@ export async function GET(
         }
 
         if (!isLong) {
-          // Single line value
+
           page.drawText(value, {
             x: ROW_VALUE_X,
             y,
@@ -364,7 +355,7 @@ export async function GET(
 
           y -= 14;
         } else {
-          // Wrapped long text
+
           y = drawWrappedText({
             page,
             text: value,
@@ -380,13 +371,9 @@ export async function GET(
         }
       }
 
-      y -= 16; // extra padding after each section
+      y -= 16; 
     }
 
-
-
-
-    // ---- FOOTER ----
     page.drawText(
       `${vehicle.dealership?.name ?? ""} · ${vehicle.dealership?.city ?? ""}`,
       {
@@ -414,7 +401,6 @@ export async function GET(
       color: rgb(0.4, 0.4, 0.4),
     });
 
-    // ---- OUTPUT ----
     const pdfBytes = await pdf.save();
 
     return new NextResponse(Buffer.from(pdfBytes), {

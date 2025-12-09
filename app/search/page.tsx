@@ -30,12 +30,11 @@ export default function SearchPage() {
 
   return (
     <div className="relative h-screen overflow-hidden bg-black">
-      {/* MAP FULLSCREEN */}
+
       <div className="absolute inset-0 z-0">
         <DealershipMap onDealerClick={setSelectedDealer} />
       </div>
 
-      {/* CLICK-AWAY BACKDROP (desktop only optional) */}
       {selectedDealer && (
         <div
           className="absolute inset-0 z-40 bg-black/30 backdrop-blur-[2px]"
@@ -43,7 +42,6 @@ export default function SearchPage() {
         />
       )}
 
-      {/* FLOATING CARD (DESKTOP) */}
       {selectedDealer && (
         <div
           className="
@@ -62,7 +60,7 @@ export default function SearchPage() {
               p-6 overflow-hidden
             "
           >
-            {/* header */}
+
             <div className="flex items-start justify-between gap-3 mb-4">
               <div>
                 <h2 className="text-xl md:text-2xl font-semibold">
@@ -81,9 +79,9 @@ export default function SearchPage() {
               </button>
             </div>
 
-            {/* content */}
+
             <div className="overflow-y-auto pr-1 max-h-[85vh] space-y-3 text-sm text-white/70">
-              {/* GRID: TWO CARDS PER ROW */}
+
               <div className="grid grid-cols-2 gap-4">
                  {vehicles.map((v: any) => (
                   <div
@@ -115,7 +113,6 @@ export default function SearchPage() {
         </div>
       )}
 
-      {/* FLOATING CARD (MOBILE) */}
       {selectedDealer && (
         <div
           className="

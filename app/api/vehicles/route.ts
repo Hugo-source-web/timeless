@@ -10,7 +10,7 @@ export async function GET(req: Request) {
   let where: any = {};
 
   if (category === "sports") {
-    where.bodyType = "Coupe";  // or custom tag field later
+    where.bodyType = "Coupe";  
   }
 
   if (category === "suv") {

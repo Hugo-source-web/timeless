@@ -24,7 +24,6 @@ export function SidebarProvider({ children }: { children: ReactNode }) {
   const open = () => setIsOpen(true);
   const close = () => setIsOpen(false);
 
-  // Disable body scrolling when sidebar is open
   useEffect(() => {
     if (isOpen) {
       document.body.classList.add("overflow-hidden");

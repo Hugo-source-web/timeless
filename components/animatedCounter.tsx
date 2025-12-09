@@ -26,7 +26,7 @@ export default function AnimatedCounter({
 
           const start = 0;
           const end = target;
-          const increment = end / (duration / 16.6); // ~60fps
+          const increment = end / (duration / 16.6);
 
           let current = start;
 

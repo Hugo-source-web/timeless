@@ -11,9 +11,9 @@ const DefaultIcon = L.icon({
   iconUrl: "/marker-icon.png",
   iconRetinaUrl: "/marker-icon-2x.png",
   shadowUrl: "/marker-shadow.png",
-  iconSize: [25, 41],        // default Leaflet size
-  iconAnchor: [12, 41],      // bottom center
-  popupAnchor: [1, -34],     // popup position
+  iconSize: [25, 41],       
+  iconAnchor: [12, 41],      
+  popupAnchor: [1, -34],     
   shadowSize: [41, 41],
 });
 

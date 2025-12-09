@@ -94,7 +94,6 @@ main {
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
 }
-/* --- Reflective Logo Hover Effect --- */
 
 .reflective-logo {
   position: relative;

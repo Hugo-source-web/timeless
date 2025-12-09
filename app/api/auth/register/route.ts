@@ -18,7 +18,6 @@ export async function POST(req: Request) {
 
     let role = "CUSTOMER";
 
-    // EMPLOYEE VERIFICATION
     if (employeeCode && employeeCode.startsWith("id-")) {
       const digits = employeeCode.replace("id-", "");
       if (/^\d{6}$/.test(digits)) {

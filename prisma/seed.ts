@@ -2,7 +2,6 @@ import { PrismaClient, MediaType } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  // Create dealership (required for FK)
   const dealership = await prisma.dealership.create({
     data: {
       name: "Timeless Motors Málaga",
@@ -19,7 +18,6 @@ async function main() {
     },
   });
 
-  // Create vehicle
   const vehicle = await prisma.vehicle.create({
     data: {
       dealershipId: dealership.id,
@@ -34,10 +32,9 @@ async function main() {
       mileageKm: 5500,
       condition: "USED",
 
-      thumbnailUrl: "/vehicles/porsche-911-gt3/thumb.jpg", // ← ⭐ Add this line
+      thumbnailUrl: "/vehicles/porsche-911-gt3/thumb.jpg", 
 
 
-      // Marketing
       heroTitle: "Precision Reimagined",
       heroSubtitle: "Born for the Track, Refined for the Road",
       heroTaglineTitle: "Pure Motorsport",
@@ -46,13 +43,11 @@ async function main() {
       heroVideoUrl:
         "/vehicles/porsche-911-gt3/videos/intro.mp4",
 
-      // Highlight stats
       highlight_0_100_s: 3.2,
       highlight_power_kw: 375,
       highlight_power_hp: 510,
       highlight_top_speed: 318,
 
-      // Performance
       powerTotalHp: 510,
       maxSpeedLimitedKmh: 318,
       massDinKg: 1418,
@@ -60,7 +55,6 @@ async function main() {
       accel_0_100_s: 3.2,
       accel_0_200_s: 10.8,
 
-      // Engine
       engineConfiguration: "Flat-6 Naturally Aspirated",
       engineArchitecture: "Boxer 4.0L",
       engineDisplacementL: 4.0,
@@ -68,14 +62,12 @@ async function main() {
       engineTorqueNm: 470,
       engineMaxRpm: 9000,
 
-      // Dimensions
       lengthMm: 4573,
       widthMm: 1852,
       widthWithMirrorsMm: 2033,
       heightMm: 1280,
       wheelbaseMm: 2450,
 
-      // Transmission
       transmissionType: "7-Speed PDK",
       elsdDescription:
         "Electronically controlled limited-slip differential",
@@ -83,7 +75,6 @@ async function main() {
         "Optimized shift logic based on gear prediction",
       transmissionCooling: "Oil-to-water high-efficiency cooling",
 
-      // Generic attributes
       bodyType: "Coupe",
       doors: 2,
       seats: 2,
@@ -97,7 +88,6 @@ async function main() {
     },
   });
 
-  // BMW M3 Competition (G80)
   const m3 = await prisma.vehicle.create({
     data: {
       dealershipId: dealership.id,
@@ -558,7 +548,6 @@ async function main() {
     ],
   });
 
-  // Add media files
   await prisma.mediaAsset.createMany({
     data: [
       {
@@ -574,7 +563,7 @@ async function main() {
         type: MediaType.IMAGE,
         url: "/vehicles/porsche-911-gt3/img2.jpg",
         alt: "Porsche 911 GT3 second hero",
-        isHero: true,   // ← NEW hero image
+        isHero: true,  
         sortOrder: 1,
       },
       {

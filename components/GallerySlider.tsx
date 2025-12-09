@@ -5,7 +5,7 @@ import { neue6 } from "@/public/fonts/neuePlak";
 import useParallax from "./useParallax";
 
 export default function GallerySlider({ images }: { images: string[] }) {
-  // Duplicate edges for seamless infinite loop
+
   const extended = [images[images.length - 1], ...images, images[0]];
 
   const [index, setIndex] = useState(1);
@@ -14,12 +14,10 @@ export default function GallerySlider({ images }: { images: string[] }) {
   const next = () => setIndex((i) => i + 1);
   const prev = () => setIndex((i) => i - 1);
 
-  // Handle infinite wrap-around
   useEffect(() => {
     if (!transition) return;
 
     if (index === extended.length - 1) {
-      // fake last → real first
       setTimeout(() => {
         setTransition(false);
         setIndex(1);
@@ -27,7 +25,6 @@ export default function GallerySlider({ images }: { images: string[] }) {
     }
 
     if (index === 0) {
-      // fake first → real last
       setTimeout(() => {
         setTransition(false);
         setIndex(extended.length - 2);
@@ -35,7 +32,6 @@ export default function GallerySlider({ images }: { images: string[] }) {
     }
   }, [index, extended.length]);
 
-  // Re-enable transition after teleporting
   useEffect(() => {
     if (!transition) {
       requestAnimationFrame(() => {
@@ -52,10 +48,8 @@ export default function GallerySlider({ images }: { images: string[] }) {
         GALERIA
       </h2>
 
-      {/* FULL-WIDTH carousel container */}
       <div className="relative w-full h-[75vh] overflow-hidden">
 
-        {/* TRACK */}
         <div
           className={`flex ${
             transition ? "transition-transform duration-700 ease-out" : ""
@@ -74,7 +68,6 @@ export default function GallerySlider({ images }: { images: string[] }) {
           ))}
         </div>
 
-        {/* NAV BUTTONS */}
         <button
           onClick={prev}
           className="absolute left-5 top-1/2 -translate-y-1/2 

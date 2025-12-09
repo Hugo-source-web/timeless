@@ -17,7 +17,6 @@ export default function Header() {
   return (
     <header className="w-full h-16 absolute top-0 left-0 z-30">
       
-      {/* GRADIENT BEHIND CONTENT */}
       <div
         className="
           absolute inset-0
@@ -26,10 +25,8 @@ export default function Header() {
         "
       />
 
-      {/* HEADER CONTENT (ON TOP OF GRADIENT) */}
       <div className="relative h-full flex items-center justify-between px-4">
 
-        {/* Left: Sidebar icon */}
         <button
           className="p-2 hover:bg-white/10 rounded-md"
           onClick={open}
@@ -37,14 +34,12 @@ export default function Header() {
           <Bars3Icon className="h-6 w-6 text-white" />
         </button>
 
-        {/* Center: Logo */}
         <div
           className={`${timelessFont.className} text-2xl font-bold text-white antialiased tracking-[0.2em]`}
         >
           TIMELESS
         </div>
 
-        {/* Right: Account icon */}
         <button
           className="p-2 hover:bg-white/10 rounded-full"
           onClick={() => {

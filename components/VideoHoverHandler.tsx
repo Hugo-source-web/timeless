@@ -29,5 +29,5 @@ export default function VideoHoverHandler() {
     };
   }, []);
 
-  return null; // Invisible component
+  return null;
 }

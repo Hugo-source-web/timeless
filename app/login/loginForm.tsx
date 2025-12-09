@@ -44,9 +44,6 @@ export default function LoginForm() {
       }
   }
 
-  // ----------------------------
-  // REGISTER A NEW USER
-  // ----------------------------
   async function handleRegister() {
     if (form.password !== form.confirm) {
       alert("Las contraseñas no coinciden");
@@ -72,7 +69,6 @@ export default function LoginForm() {
         return;
       }
 
-      // AUTO LOGIN AFTER REGISTER
       await signIn("credentials", {
         redirect: false,
         email: form.email,
@@ -90,21 +86,18 @@ export default function LoginForm() {
   return (
     <div className="flex flex-col justify-start w-full max-w-sm">
 
-      {/* BRAND */}
       <div
         className={`${timelessFont.className} text-3xl font-bold text-white tracking-[0.25em] text-center pb-15 mb-6`}
       >
         TIMELESS
       </div>
 
-      {/* TITLE */}
       <h1 className="text-xl font-semibold mb-6 text-white tracking-wide">
         {isRegister
           ? "¿Es tu primera vez con nosotros?"
           : "¡Bienvenido! Por favor, inicia sesión"}
       </h1>
 
-      {/* LOGIN FORM */}
       {!isRegister && (
         <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
           <input
@@ -134,7 +127,6 @@ export default function LoginForm() {
             {loading ? "Cargando..." : "Iniciar sesión"}
           </button>
 
-          {/* GOOGLE BUTTON */}
           <a
             href="/api/auth/google"
             className="block w-full text-center p-3 bg-blue-500/60 hover:bg-blue-500 rounded-s border border-white/20 text-m transition"
@@ -144,11 +136,9 @@ export default function LoginForm() {
         </form>
       )}
 
-      {/* REGISTER FORM */}
       {isRegister && (
       <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
 
-        {/* FORM TITLE + SUBTEXT */}
         <div className="mb-4">
           <h1 className="text-2xl font-semibold tracking-wide text-white">
             Crea tu cuenta
@@ -158,7 +148,6 @@ export default function LoginForm() {
           </p>
         </div>
 
-        {/* NAME */}
         <div className="flex flex-col space-y-1">
           <label className="text-sm text-white/70">Nombre</label>
           <input
@@ -171,7 +160,6 @@ export default function LoginForm() {
           />
         </div>
 
-        {/* EMAIL */}
         <div className="flex flex-col space-y-1">
           <label className="text-sm text-white/70">Email</label>
           <input
@@ -184,7 +172,6 @@ export default function LoginForm() {
           />
         </div>
 
-        {/* PASSWORD */}
         <div className="flex flex-col space-y-1">
           <label className="text-sm text-white/70">Contraseña</label>
           <input
@@ -197,7 +184,6 @@ export default function LoginForm() {
           />
         </div>
 
-        {/* CONFIRM */}
         <div className="flex flex-col space-y-1">
           <label className="text-sm text-white/70">Confirmar contraseña</label>
           <input
@@ -210,7 +196,6 @@ export default function LoginForm() {
           />
         </div>
 
-        {/* SUBMIT BUTTON */}
         <button
           type="button"
           onClick={handleRegister}
@@ -225,7 +210,6 @@ export default function LoginForm() {
     )}
 
 
-      {/* TOGGLE */}
       <div className="text-center mt-6 text-white/60 text-sm">
         {!isRegister ? (
           <>

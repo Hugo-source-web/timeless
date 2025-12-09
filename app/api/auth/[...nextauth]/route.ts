@@ -61,17 +61,16 @@ export const authOptions: NextAuthOptions = {
     },
 
     async redirect({ url, baseUrl }) {
-      // If NextAuth is redirecting to a callback URL, go to landing instead
+
       if (url.includes("/api/auth/callback")) {
         return `${baseUrl}/landing`;
       }
 
-      // If it's an internal URL (e.g. /dashboard, /profile)
+ 
       if (url.startsWith("/")) {
         return `${baseUrl}${url}`;
       }
 
-      // Fallback
       return baseUrl;
     },
   },

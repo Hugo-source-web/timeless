@@ -18,7 +18,6 @@ export default function SpecSheet({ vehicle }: SpecSheetProps) {
       
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 border border-white/40 rounded-md px-10 py-10">
 
-        {/* PERFORMANCE */}
         <SpecSection
           title="Performance"
           rows={[
@@ -29,7 +28,6 @@ export default function SpecSheet({ vehicle }: SpecSheetProps) {
           ]}
         />
 
-        {/* ACCELERATION */}
         <SpecSection
           title="Acceleration"
           rows={[
@@ -40,7 +38,6 @@ export default function SpecSheet({ vehicle }: SpecSheetProps) {
           ]}
         />
 
-        {/* COMBUSTION ENGINE */}
         <SpecSection
           title="Combustion Engine"
           rows={[
@@ -53,7 +50,6 @@ export default function SpecSheet({ vehicle }: SpecSheetProps) {
           ]}
         />
 
-        {/* DIMENSIONS */}
         <SpecSection
           title="Dimensions"
           rows={[
@@ -64,7 +60,6 @@ export default function SpecSheet({ vehicle }: SpecSheetProps) {
           ]}
         />
 
-        {/* TRANSMISSION */}
         <SpecSection
           title="Transmission"
           rows={[
@@ -75,7 +70,6 @@ export default function SpecSheet({ vehicle }: SpecSheetProps) {
           ]}
         />
 
-        {/* BATTERY */}
         <SpecSection
           title="Traction Battery"
           rows={[
@@ -86,7 +80,6 @@ export default function SpecSheet({ vehicle }: SpecSheetProps) {
           ]}
         />
 
-        {/* FRONT AXLE */}
         <SpecSection
           title="Front Axle"
           rows={[
@@ -98,7 +91,6 @@ export default function SpecSheet({ vehicle }: SpecSheetProps) {
           ]}
         />
 
-        {/* REAR MOTOR */}
         <SpecSection
           title="Rear eMotor"
           rows={[
@@ -124,8 +116,6 @@ export default function SpecSheet({ vehicle }: SpecSheetProps) {
             </a>
         </div>
       </div>
-
-      {/* DOWNLOAD BUTTON */}
     </section>
   );
 }

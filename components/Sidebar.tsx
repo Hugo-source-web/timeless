@@ -33,7 +33,7 @@ const itemVariants: Variants = {
     y: 0,
     transition: {
       duration: 0.35,
-      ease: "easeOut", // literal that matches FM's union
+      ease: "easeOut", 
     },
   },
 };
@@ -79,14 +79,12 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Background overlay */}
       <div
         onClick={close}
         className={`fixed inset-0 bg-black/10 backdrop-blur-sm z-50 transition-opacity duration-300
         ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
       />
 
-      {/* Sliding sidebar */}
         <aside
           className={`
             fixed top-6 left-6 h-[calc(100vh-3rem)] 
@@ -100,7 +98,6 @@ export default function Sidebar() {
             }
           `}
         >
-          {/* Close button INSIDE the sidebar */}
         <button
           onClick={close}
           className="
@@ -116,17 +113,12 @@ export default function Sidebar() {
         </button>
 
         <div className="flex h-full">
-          {/* LEFT: sections + options */}
           <motion.div
             className="w-[35%] border-r p-4 overflow-y-auto"
             variants={containerVariants}
             initial="hidden"
             animate={isOpen ? "show" : "hidden"}
           >
-
-            {/* Header + close */}
-
-            {/* Sections */}
             {sidebarSections.map((section) => (
               <div key={section.title} className= "mb-1 pt-9.5">
                   <motion.h3
@@ -176,17 +168,14 @@ export default function Sidebar() {
               </motion.div>
           </motion.div>
 
-              {/* RIGHT: section content (images-only OR text-only) */}
                 <div className="w-[65%] p-4 overflow-y-auto">
                   <motion.div
                     key={selectedItem || selectedSection} 
-                    // key ensures animation triggers on every change
                     variants={containerVariants}
                     initial="hidden"
                     animate="show"
                     className="w-full h-full"
                   >
-                      {/* IMAGE-type SECTION (Cars, SUVs, EV, etc.) */}
                         {selectedSectionObj?.type === "images" && selectedItem && (
                         <>
                           {vehicles.length > 0 ? (
@@ -218,9 +207,6 @@ export default function Sidebar() {
                         </>
                       )}
 
-
-
-                      {/* TEXT-type section */}
                       {selectedSectionObj?.type === "text" && !selectedItem && (
                         <div className="space-y-4 pt-[7.5vh]">
                           <div className={`${neue9.className} flex flex-col gap-2 text-black text-3xl`}>
@@ -248,7 +234,6 @@ export default function Sidebar() {
                                     </button>
                                   )
                                 ) : item.key === "account" ? (
-                                    /* NEW: ACCOUNT MANAGEMENT REDIRECT */
                                     <button
                                       onClick={() => {
                                         router.push("/cuenta");
@@ -264,7 +249,6 @@ export default function Sidebar() {
                                     </button>
 
                                   ) : (
-                                  // Normal text item (unchanged behavior)
                                   <button
                                     onClick={() => {
                                       setSelectedSection(selectedSectionObj.title);

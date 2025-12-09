@@ -9,12 +9,6 @@ export default function SearchMapLayout() {
 
   return (
     <div className="relative h-[calc(100vh-4rem)] overflow-hidden">
-      {/* MAP CONTAINER (animates between full-screen and docked left) */}
-
-      {/* RIGHT OVERLAY – only when a dealer is selected */}
-
-
-      {/* MOBILE overlay (bottom sheet style) */}
       {selectedDealer && (
         <div
           className={`

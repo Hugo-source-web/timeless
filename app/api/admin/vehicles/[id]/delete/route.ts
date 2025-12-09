@@ -5,7 +5,7 @@ export async function POST(
   request: NextRequest,
   context: { params: Promise<{ id: string }> }
 ) {
-  const { id } = await context.params;   // <-- IMPORTANT
+  const { id } = await context.params;
 
   try {
     await prisma.mediaAsset.deleteMany({

@@ -10,7 +10,6 @@ export default function Footer() {
     <footer
       className="relative w-full bg-[#0d0d0d] text-gray-300 pt-12 px-6 overflow-hidden group"
     >
-      {/* --- REGION ROW --- */}
       <div className="flex flex-col sm:flex-row sm:items-center gap-6 mb-12">
         <div className="flex items-center gap-3">
           🇪🇸 <span>España / Español</span>
@@ -18,9 +17,7 @@ export default function Footer() {
         <button className="text-sm underline hover:text-white">Cambiar</button>
       </div>
 
-      {/* --- TOP GRID --- */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 mb-12">
-        {/* Contact */}
         <div>
           <h3 className="font-semibold mb-2 text-white">Ubicación y contacto</h3>
           <p className="text-sm mb-3">¿Preguntas?</p>
@@ -29,7 +26,6 @@ export default function Footer() {
           </button>
         </div>
 
-        {/* Social */}
         <div>
           <h3 className="font-semibold mb-2 text-white">Redes Sociales</h3>
           <p className="text-sm mb-3 w-56">
@@ -47,7 +43,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Company */}
         <div className="grid grid-cols-1 text-sm gap-2">
           <p className="font-semibold text-white">Empresa</p>
           <button className="hover:text-white text-left">Timeless Motors</button>
@@ -58,13 +53,11 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* --- LEGAL --- */}
       <div className="text-[11px] leading-relaxed text-gray-400 border-t border-white/10 pt-6">
         © 2025 Timeless Motors. All rights reserved.  
         <br />Aviso Legal · Cookies · Privacidad · Accesibilidad · EU Data Act
       </div>
 
-      {/* --- REFLECTIVE BOTTOM AREA --- */}
         <div
         className="relative w-full h-[350px] flex items-end justify-center pb-4 mt-15"
         onMouseMove={(e) => {
@@ -75,7 +68,6 @@ export default function Footer() {
             });
         }}
         >
-        {/* Hidden base text */}
             <div
                 className={`
                 ${timelessFont.className}
@@ -87,7 +79,6 @@ export default function Footer() {
                 TIMELESS
             </div>
 
-        {/* Reflective spotlight layer */}
             <div
                 className={`
                 ${timelessFont.className}

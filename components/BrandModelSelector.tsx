@@ -25,19 +25,18 @@ export default function BrandModelSelector({
     .filter((v) => v.brand === brand)
     .map((v) => v.model);
 
-  // Auto-reset model if it doesn’t exist under the new brand
     useEffect(() => {
     if (!models.includes(model)) {
-        const firstModel = models[0];    // ← pick first valid model
-        setModel(firstModel);            // ← update local state
-        onModelChange(firstModel);       // ← notify parent (HeroImageSwitcher)
+        const firstModel = models[0];   
+        setModel(firstModel);            
+        onModelChange(firstModel);       
     }
     }, [brand]);
 
 
   return (
     <div className="w-full max-w-3xl flex flex-col md:flex-row gap-6 text-white">
-      {/* BRAND */}
+
       <div className="w-full">
         <label className="block text-sm mb-1 text-white">Marca *</label>
         <select
@@ -53,7 +52,6 @@ export default function BrandModelSelector({
         </select>
       </div>
 
-      {/* MODEL */}
       <div className="w-full">
         <label className="block text-sm mb-1 text-white">Modelo *</label>
         <select

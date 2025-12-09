@@ -23,7 +23,6 @@ export default function HeroImageSwitcher({
   const [selectedBrand, setSelectedBrand] = useState(initialBrand);
   const [selectedModel, setSelectedModel] = useState(initialModel);
 
-  // --- EXPOSE CHANGES TO PARENT PAGE ---
   useEffect(() => {
     onBrandChange(selectedBrand);
   }, [selectedBrand]);
@@ -46,7 +45,6 @@ export default function HeroImageSwitcher({
 
   return (
     <>
-      {/* HERO SECTION */}
       <section className="relative w-full h-[80vh] overflow-hidden">
         <img
           src={image}
@@ -62,7 +60,6 @@ export default function HeroImageSwitcher({
         </div>
       </section>
 
-      {/* BRAND + MODEL */}
       <section className="w-full flex flex-col items-center mt-20 px-6 text-white">
         <div className="w-full max-w-3xl text-center mb-10">
           <h1 className="text-4xl md:text-5xl">

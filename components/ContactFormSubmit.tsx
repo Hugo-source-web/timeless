@@ -14,7 +14,6 @@ export default function ContactFormSubmit({
   const handleSubmit = async () => {
     setLoading(true);
 
-    // Grab form values from the page inputs
     const name = (document.getElementById("firstName") as HTMLInputElement)?.value;
     const lastName1 = (document.getElementById("lastName1") as HTMLInputElement)?.value;
     const lastName2 = (document.getElementById("lastName2") as HTMLInputElement)?.value;

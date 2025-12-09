@@ -11,7 +11,7 @@ import Providers from "./providers";
 
 const robotoCondensed = Roboto_Condensed({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "700"], // you can choose which weights you want
+  weight: ["300", "400", "500", "700"], 
 });
 
 
