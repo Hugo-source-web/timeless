@@ -115,7 +115,7 @@ export default function SpecSheet({ vehicle }: SpecSheetProps) {
             </h2>
 
             <a
-              href={`/api/pdf/vehiculos/${vehicle.slug}`}
+              href={`/api/pdf/${vehicle.slug}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block px-8 py-3 bg-white text-black rounded-md font-semibold hover:bg-gray-200 transition"
