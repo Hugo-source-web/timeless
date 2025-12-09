@@ -3,9 +3,9 @@ import prisma from "@/lib/prisma";
 
 export async function POST(
   request: NextRequest,
-  context: { params: { id: string } }
+  context: { params: any }
 ) {
-  const { id } = context.params;
+  const id = context.params?.id;
 
   try {
     await prisma.mediaAsset.deleteMany({
