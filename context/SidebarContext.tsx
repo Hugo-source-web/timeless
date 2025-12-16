@@ -8,7 +8,7 @@ type SidebarContextType = {
   close: () => void;
 
   selectedSection: string | null;
-  setSelectedSection: (section: string) => void;
+  setSelectedSection: (section: string | null) => void;
 
   selectedItem: string | null;
   setSelectedItem: (item: string | null) => void;

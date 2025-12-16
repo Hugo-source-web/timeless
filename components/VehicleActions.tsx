@@ -16,7 +16,7 @@ export default function VehicleActions({ slug }: { slug: string }) {
       </button>
 
       <button
-        onClick={() => router.push(`/vehiculos/${slug}/contacto`)}
+        onClick={() => router.push(`/vehiculos/${slug}/adquirir`)}
         className="px-10 py-4 rounded-md bg-white text-black text-lg font-semibold hover:bg-gray-200 transition"
       >
         Adquirir vehículo

@@ -86,7 +86,7 @@ export default async function HomePage() {
       <div className="w-full h-32 z-50 bg-gradient-to-b from-transparent to-black" />
 
 
-      <section className="bg-black text-white pt-40 px-0">
+      <section className="bg-black text-white pt-20 px-0">
 
         <div className="px-6 md:px-[4vw] mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-2">
@@ -155,7 +155,77 @@ export default async function HomePage() {
         })}
         </div>
       </section>
+      <section className="bg-black text-white py-32 pt-50">
+      <div className="px-6 md:px-[8vw]">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
+          Descubra más sobre Timeless
+        </h2>
 
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+          <a
+            href="#"
+            className="group relative h-[360px] rounded-xl overflow-hidden shadow-lg"
+          >
+            <img
+              src="/images/timeless-drive.jpg"
+              alt="Timeless Drive Rental"
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/10" />
+            <div className="absolute bottom-6 left-6 right-6 text-white">
+              <p className="text-lg font-semibold">
+                Timeless Drive Rental
+              </p>
+              <p className="text-sm opacity-90 mt-1">
+                Alquile el vehiculo de sus sueños.
+              </p>
+            </div>
+          </a>
+
+          <a
+            href="#"
+            className="group relative h-[360px] rounded-xl overflow-hidden shadow-lg"
+          >
+            <img
+              src="/images/timeless-experience.jpg"
+              alt="Timeless Experience España"
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/10" />
+            <div className="absolute bottom-6 left-6 right-6 text-white">
+              <p className="text-lg font-semibold">
+                Timeless Experience España
+              </p>
+              <p className="text-sm opacity-90 mt-1">
+                Perfeccionamiento de técnicas de conducción.
+              </p>
+            </div>
+          </a>
+
+          <a
+            href="#"
+            className="group relative h-[360px] rounded-xl overflow-hidden shadow-lg"
+          >
+            <img
+              src="/images/timeless-service.jpg"
+              alt="Timeless Service"
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/10" />
+            <div className="absolute bottom-6 left-6 right-6 text-white">
+              <p className="text-lg font-semibold">
+                Timeless Service
+              </p>
+              <p className="text-sm opacity-90 mt-1">
+                Servicio posventa Timeless.
+              </p>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
     </>
   );
 }

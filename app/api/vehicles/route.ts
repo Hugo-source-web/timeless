@@ -4,47 +4,39 @@ import prisma from "@/lib/prisma";
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
 
-  const category = searchParams.get("category");
+  const category = searchParams.get("category")?.toLowerCase();
   const recent = searchParams.get("recent");
 
   let where: any = {};
 
-  if (category === "sports") {
-    where.bodyType = "Coupe";  
+  const CATEGORY_FILTERS: Record<string, any> = {
+    sports: { bodyType: "Coupe" },
+    suv: { bodyType: "SUV" },
+    ev: { fuelType: "ELECTRIC" },
+  };
+
+  if (category) {
+    const filter = CATEGORY_FILTERS[category];
+    if (!filter) {
+      return NextResponse.json([]); 
+    }
+    where = filter;
   }
 
-  if (category === "suv") {
-    where.bodyType = "SUV";
-  }
-
-  if (category === "electric") {
-    where.fuelType = "ELECTRIC";
-  }
-
-  let vehicles = [];
-
-  if (recent) {
-    vehicles = await prisma.vehicle.findMany({
-      orderBy: { createdAt: "desc" },
-      take: 12,
-      include: { media: true },
-    });
-  } else {
-    vehicles = await prisma.vehicle.findMany({
-      where,
-      include: { media: true },
-      take: 20,
-    });
-  }
+  const vehicles = await prisma.vehicle.findMany({
+    where,
+    orderBy: recent ? { createdAt: "desc" } : undefined,
+    take: recent ? 12 : 20,
+    include: { media: true },
+  });
 
   const dealerId = searchParams.get("dealerId");
-
+  
   if (dealerId) {
     const vehicles = await prisma.vehicle.findMany({
       where: { dealershipId: Number(dealerId) },
       include: { media: true },
     });
-
     return NextResponse.json(vehicles);
   }
 

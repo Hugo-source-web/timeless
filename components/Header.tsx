@@ -1,17 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { Bars3Icon, UserCircleIcon } from "@heroicons/react/24/outline";
 import { useSidebar } from "@/context/SidebarContext";
 import { timelessFont } from "@/public/fonts/timeless";
 import { accountSection } from "@/lib/sidebarData";
 
 export default function Header() {
-  const { 
-      isOpen, 
-      open, 
-      setSelectedSection, 
-      setSelectedItem 
-    } = useSidebar();
+  const { open, setSelectedSection, setSelectedItem } = useSidebar();
 
 
   return (
@@ -34,11 +30,16 @@ export default function Header() {
           <Bars3Icon className="h-6 w-6 text-white" />
         </button>
 
-        <div
-          className={`${timelessFont.className} text-2xl font-bold text-white antialiased tracking-[0.2em]`}
+        <Link
+          href="/"
+          className={`${timelessFont.className} text-2xl font-bold text-white antialiased tracking-[0.2em] hover:opacity-90 transition`}
+          onClick={() => {
+            setSelectedSection(null);
+            setSelectedItem(null);
+          }}
         >
           TIMELESS
-        </div>
+        </Link>
 
         <button
           className="p-2 hover:bg-white/10 rounded-full"

@@ -60,10 +60,19 @@ export default function Sidebar() {
   if (selectedSectionObj?.type !== "images") return;
 
   async function load() {
-    const res = await fetch(`/api/vehicles?category=${selectedItem}`);
+    let url = "/api/vehicles";
+
+    if (selectedItem === "recent") {
+      url += "?recent=true";
+    } else {
+      url += `?category=${selectedItem}`;
+    }
+
+    const res = await fetch(url);
     const data = await res.json();
     setVehicles(data);
   }
+
 
   load();
 }, [selectedItem]);
@@ -233,10 +242,14 @@ export default function Sidebar() {
                                       {item.label}
                                     </button>
                                   )
-                                ) : item.key === "account" ? (
+                                  ) : item.key === "account" ? (
                                     <button
                                       onClick={() => {
-                                        router.push("/cuenta");
+                                        if (!session?.user) {
+                                          router.push("/login");
+                                        } else {
+                                          router.push("/cuenta");
+                                        }
                                         close();
                                       }}
                                       className="
@@ -247,7 +260,6 @@ export default function Sidebar() {
                                     >
                                       {item.label}
                                     </button>
-
                                   ) : (
                                   <button
                                     onClick={() => {
