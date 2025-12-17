@@ -5,8 +5,6 @@ import { UserRole } from "@prisma/client";
 import { randomBytes } from "crypto";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 function buildVerifyUrl(email: string, token: string) {
   const base =
     process.env.NEXTAUTH_URL || "http://localhost:3000";
@@ -75,8 +73,10 @@ export async function POST(req: Request) {
 
     const verifyUrl = buildVerifyUrl(email, token);
 
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
     await resend.emails.send({
-      from: "Timeless <noreply@resend.dev>",
+      from: "Timeless Motors <noreply@resend.dev>",
       to: email,
       subject: "Verifica tu cuenta en Timeless",
       html: `
