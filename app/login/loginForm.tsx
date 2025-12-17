@@ -69,15 +69,9 @@ export default function LoginForm() {
         return;
       }
 
-      await signIn("credentials", {
-        redirect: false,
-        email: form.email,
-        password: form.password,
-      });
+      alert("Te hemos enviado un email de verificación. Revisa tu bandeja de entrada.");
+      setIsRegister(false);
 
-      
-      router.push("/");
-      router.refresh();
     } finally {
       setLoading(false);
     }
