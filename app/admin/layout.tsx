@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import type { UserRole } from "@prisma/client";
 
 export default async function AdminLayout({
   children,
@@ -9,16 +10,25 @@ export default async function AdminLayout({
 }) {
   const session = await getServerSession(authOptions);
 
-  // Protect admin routes
- /* if (!session || session.user.role !== "ADMIN") {
+  // 1) Not logged in → kick out
+  if (!session || !session.user) {
     redirect("/login");
-  }*/
+  }
+
+  // 2) Logged in but wrong role → kick out
+  const role = session.user.role as UserRole;
+
+  if (role !== "ADMIN" && role !== "EMPLOYEE") {
+    redirect("/");
+  }
 
   return (
     <div className="flex h-screen w-full bg-neutral-950 text-white">
       {/* Sidebar */}
       <aside className="w-[240px] bg-neutral-900 border-r border-neutral-800 p-6 fixed left-0 top-0 bottom-0">
-        <h2 className="text-xl font-semibold mb-8 tracking-tight">Timeless Admin</h2>
+        <h2 className="text-xl font-semibold mb-8 tracking-tight">
+          Timeless Admin
+        </h2>
 
         <nav className="flex flex-col gap-4 text-neutral-400">
           <a href="/admin/dashboard" className="hover:text-white transition-colors">
@@ -33,11 +43,11 @@ export default async function AdminLayout({
           >
             Añadir vehículo
           </a>
-          <a href="/admin/users" className="hover:text-white transition-colors">
-            Usuarios
-          </a>
           <a href="/admin/dealerships" className="hover:text-white transition-colors">
             Concesionarios
+          </a>
+          <a href="/admin/users" className="hover:text-white transition-colors">
+            Usuarios
           </a>
         </nav>
       </aside>
