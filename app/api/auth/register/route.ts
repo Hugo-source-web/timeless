@@ -82,7 +82,7 @@ export async function POST(req: Request) {
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     const { data, error } = await resend.emails.send({
-      from: "Timeless Motors <noreply@resend.dev>",
+      from: "noreply@resend.dev",
       to: email,
       subject: "Verifica tu cuenta en Timeless",
       html: `...`,

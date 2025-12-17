@@ -23,7 +23,7 @@ export const authOptions: NextAuthOptions = {
       credentials: { email: {}, password: {} },
 
       async authorize(credentials) {
-        const email = credentials?.email;
+        const email = credentials?.email?.toLowerCase().trim();
         const password = credentials?.password;
 
         if (!email || !password) return null;
@@ -31,6 +31,10 @@ export const authOptions: NextAuthOptions = {
         const user = await prisma.user.findUnique({ where: { email } });
 
         if (!user || !user.passwordHash) return null;
+
+        if (!user.emailVerified) {
+          throw new Error("EMAIL_NOT_VERIFIED");
+        }
 
         const valid = await compare(password, user.passwordHash);
         if (!valid) return null;
@@ -41,7 +45,7 @@ export const authOptions: NextAuthOptions = {
           name: user.name,
           role: user.role,
         };
-      },
+      }
     }),
   ],
 
