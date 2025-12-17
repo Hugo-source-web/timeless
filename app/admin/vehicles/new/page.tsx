@@ -14,7 +14,6 @@ export default async function NewVehiclePage() {
         action={createVehicle}
         className="space-y-8 bg-neutral-900 p-8 rounded-lg border border-neutral-800"
       >
-        {/* Dealership */}
         <div className="flex flex-col gap-2">
           <label className="font-medium">Concesionario</label>
           <select
@@ -31,7 +30,6 @@ export default async function NewVehiclePage() {
           </select>
         </div>
 
-        {/* Basics */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="flex flex-col gap-2">
             <label className="font-medium">Marca</label>
@@ -71,7 +69,6 @@ export default async function NewVehiclePage() {
           </div>
         </div>
 
-        {/* Price */}
         <div className="flex flex-col gap-2">
           <label className="font-medium">Precio (€)</label>
           <input
@@ -83,7 +80,6 @@ export default async function NewVehiclePage() {
           />
         </div>
 
-        {/* Media notice */}
         <div className="rounded border border-neutral-800 bg-neutral-950 p-4 text-sm text-neutral-400">
           La carga de imágenes y vídeos no está disponible actualmente desde la
           interfaz de administración.  
@@ -93,7 +89,6 @@ export default async function NewVehiclePage() {
           entornos serverless.
         </div>
 
-        {/* Submit */}
         <button
           type="submit"
           className="px-4 py-2 bg-neutral-700 hover:bg-neutral-600 rounded transition text-white"

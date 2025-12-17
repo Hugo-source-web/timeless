@@ -34,6 +34,6 @@ export async function createDealership(formData: FormData) {
   });
 
   revalidatePath("/admin/dealerships");
-  revalidatePath("/search"); // updates Leaflet
+  revalidatePath("/search");
   redirect("/admin/dealerships");
 }

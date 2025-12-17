@@ -52,7 +52,6 @@ export default function NewDealershipPage() {
           </div>
         </div>
 
-        {/* Coordinates */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="flex flex-col gap-2">
             <label className="font-medium">Latitud</label>
@@ -79,13 +78,11 @@ export default function NewDealershipPage() {
           </div>
         </div>
 
-        {/* Helper note */}
         <div className="rounded border border-neutral-800 bg-neutral-950 p-4 text-sm text-neutral-400">
           Las coordenadas se utilizan para posicionar el concesionario
           en el mapa interactivo de búsqueda.
         </div>
 
-        {/* Submit */}
         <button
           type="submit"
           className="px-4 py-2 bg-neutral-700 hover:bg-neutral-600 rounded transition text-white"

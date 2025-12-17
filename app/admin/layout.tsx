@@ -10,12 +10,10 @@ export default async function AdminLayout({
 }) {
   const session = await getServerSession(authOptions);
 
-  // 1) Not logged in → kick out
   if (!session || !session.user) {
     redirect("/login");
   }
 
-  // 2) Logged in but wrong role → kick out
   const role = session.user.role as UserRole;
 
   if (role !== "ADMIN" && role !== "EMPLOYEE") {
@@ -24,7 +22,6 @@ export default async function AdminLayout({
 
   return (
     <div className="flex h-screen w-full bg-neutral-950 text-white">
-      {/* Sidebar */}
       <aside className="w-[240px] bg-neutral-900 border-r border-neutral-800 p-6 fixed left-0 top-0 bottom-0">
         <h2 className="text-xl font-semibold mb-8 tracking-tight">
           Timeless Admin
@@ -34,25 +31,36 @@ export default async function AdminLayout({
           <a href="/admin/dashboard" className="hover:text-white transition-colors">
             Resumen
           </a>
+
           <a href="/admin/vehicles" className="hover:text-white transition-colors">
             Inventario
           </a>
+
           <a
             href="/admin/vehicles/new"
             className="hover:text-white transition-colors"
           >
             Añadir vehículo
           </a>
-          <a href="/admin/dealerships" className="hover:text-white transition-colors">
+
+          <a
+            href="/admin/dealerships"
+            className="hover:text-white transition-colors"
+          >
             Concesionarios
           </a>
-          <a href="/admin/users" className="hover:text-white transition-colors">
-            Usuarios
-          </a>
+
+          {role === "ADMIN" && (
+            <a
+              href="/admin/users"
+              className="hover:text-white transition-colors"
+            >
+              Usuarios
+            </a>
+          )}
         </nav>
       </aside>
 
-      {/* Main content */}
       <main className="ml-[240px] flex-1 p-8 overflow-y-auto">
         {children}
       </main>

@@ -7,11 +7,20 @@ import { UserRole } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-/* ──────────────────────────────────────────────
-   SERVER ACTIONS
-────────────────────────────────────────────── */
+async function requireAdmin() {
+  const session = await getServerSession(authOptions);
+
+  if (!session || session.user.role !== "ADMIN") {
+    throw new Error("Acceso no autorizado.");
+  }
+
+  return session;
+}
+
 
 export async function updateRole(formData: FormData) {
+  await requireAdmin();
+
   const id = Number(formData.get("id"));
   const newRole = formData.get("role") as UserRole;
 
@@ -23,14 +32,13 @@ export async function updateRole(formData: FormData) {
   redirect("/admin/users");
 }
 
-export async function deleteUser(formData: FormData) {
-  const id = Number(formData.get("id"));
-  const session = await getServerSession(authOptions);
 
-  if (!session) throw new Error("No session.");
+export async function deleteUser(formData: FormData) {
+  const session = await requireAdmin();
+
+  const id = Number(formData.get("id"));
   const currentUserId = Number(session.user.id);
 
-  // Prevent self-deletion ⭐
   if (id === currentUserId) {
     throw new Error("No puedes eliminar tu propia cuenta.");
   }
@@ -40,6 +48,8 @@ export async function deleteUser(formData: FormData) {
 }
 
 export async function toggleDisabled(formData: FormData) {
+  await requireAdmin();
+
   const id = Number(formData.get("id"));
   const current = formData.get("current") === "true";
 
@@ -51,9 +61,6 @@ export async function toggleDisabled(formData: FormData) {
   redirect("/admin/users");
 }
 
-/* ──────────────────────────────────────────────
-   PAGE COMPONENT
-────────────────────────────────────────────── */
 
 export default async function UsersPage(props: {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
@@ -65,7 +72,6 @@ export default async function UsersPage(props: {
 
   const searchParams = (await props.searchParams) ?? {};
 
-  /* ── Extract query params safely ───────────────────── */
 
   const getParam = (name: string): string | undefined => {
     const val = searchParams[name];
@@ -83,7 +89,6 @@ export default async function UsersPage(props: {
   const sortRaw = getParam("sort") || "createdAt-desc";
   const [sortField, sortDirection] = sortRaw.split("-");
 
-  /* ── Fetch users ───────────────────────────────────── */
 
   const users = await prisma.user.findMany({
     where: q
@@ -104,13 +109,11 @@ export default async function UsersPage(props: {
     take: limit,
   });
 
-  /* ─────────────────────────────────────────────────── */
 
   return (
     <div>
       <h1 className="text-3xl font-semibold mb-6">Usuarios</h1>
 
-      {/* SEARCH BAR */}
       <form method="GET" className="mb-6 flex gap-4 items-center">
         <input
           type="text"
@@ -132,7 +135,6 @@ export default async function UsersPage(props: {
         </Link>
       </form>
 
-      {/* SORTING OPTIONS */}
       <div className="mb-6 flex gap-3 text-sm">
         <Link
           href={`/admin/users?sort=createdAt-desc`}
@@ -160,14 +162,13 @@ export default async function UsersPage(props: {
         </Link>
       </div>
 
-      {/* USERS GRID */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         {users.map((u) => (
           <div
             key={u.id}
             className="bg-neutral-900 border border-neutral-800 rounded-lg p-5 flex flex-col gap-3"
           >
-            {/* Basic Info */}
+
             <div className="flex justify-between items-center">
               <p className="text-lg font-semibold">
                 {u.name ?? "(Sin nombre)"}
@@ -187,10 +188,8 @@ export default async function UsersPage(props: {
               </span>
             </div>
 
-            {/* Email */}
             <p className="text-neutral-400 text-sm">{u.email}</p>
 
-            {/* Status */}
             <span
               className={`text-xs px-2 py-1 rounded w-fit ${
                 u.disabled
@@ -201,17 +200,14 @@ export default async function UsersPage(props: {
               {u.disabled ? "INACTIVO" : "ACTIVO"}
             </span>
 
-            {/* Reservation count */}
             <p className="text-neutral-500 text-xs">
               Reservas: {u.reservedVehicles.length}
             </p>
 
-            {/* Registered */}
             <p className="text-neutral-600 text-xs">
               Registrado el: {u.createdAt.toLocaleDateString()}
             </p>
 
-            {/* View Details */}
             <Link
               href={`/admin/users/${u.id}`}
               className="px-3 py-1 bg-neutral-800 rounded hover:bg-neutral-700 text-sm w-fit"
@@ -219,7 +215,6 @@ export default async function UsersPage(props: {
               Ver detalles
             </Link>
 
-            {/* Role Selector */}
             <form action={updateRole} className="flex gap-2 items-center mt-2">
               <input type="hidden" name="id" value={u.id} />
 
@@ -241,7 +236,6 @@ export default async function UsersPage(props: {
               </button>
             </form>
 
-            {/* Disable / Enable */}
             <form action={toggleDisabled} className="mt-2">
               <input type="hidden" name="id" value={u.id} />
               <input type="hidden" name="current" value={String(u.disabled)} />
@@ -258,7 +252,6 @@ export default async function UsersPage(props: {
               </button>
             </form>
 
-            {/* Delete User (blocked for yourself) */}
             {u.id !== currentUserId && (
               <form action={deleteUser} className="mt-2">
                 <input type="hidden" name="id" value={u.id} />
@@ -274,14 +267,12 @@ export default async function UsersPage(props: {
         ))}
       </div>
 
-      {/* No results */}
       {users.length === 0 && (
         <p className="text-neutral-500 mt-10 text-sm">
           No se encontraron usuarios.
         </p>
       )}
 
-      {/* Pagination */}
       <div className="flex gap-3 mt-10">
         {page > 1 && (
           <Link

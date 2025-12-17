@@ -37,7 +37,6 @@ export async function createVehicle(formData: FormData) {
       variant,
       year,
       price,
-      // availability, currency, thumbnailUrl, etc. use defaults
     },
   });
 
