@@ -64,10 +64,11 @@ export default function LoginForm() {
       });
 
       if (!res.ok) {
-        alert("Hubo un error creando tu cuenta");
-        setLoading(false);
+        const data = await res.json();
+        alert(data.error || "Error creando la cuenta");
         return;
       }
+
 
       alert("Te hemos enviado un email de verificación. Revisa tu bandeja de entrada.");
       setIsRegister(false);

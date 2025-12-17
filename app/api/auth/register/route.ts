@@ -20,7 +20,13 @@ function buildVerifyUrl(email: string, token: string) {
 
 export async function POST(req: Request) {
   try {
-    const { name, email, password, employeeCode } = await req.json();
+    const body = await req.json();
+
+    const name = body.name;
+    const email = String(body.email || "").toLowerCase().trim();
+    const password = body.password;
+    const employeeCode = body.employeeCode;
+
 
     if (!email || !password) {
       return NextResponse.json(
@@ -75,21 +81,23 @@ export async function POST(req: Request) {
 
     const resend = new Resend(process.env.RESEND_API_KEY);
 
-    await resend.emails.send({
+    const { data, error } = await resend.emails.send({
       from: "Timeless Motors <noreply@resend.dev>",
       to: email,
       subject: "Verifica tu cuenta en Timeless",
-      html: `
-        <div style="font-family:system-ui">
-          <h2>Verificación de correo</h2>
-          <p>Para activar tu cuenta, confirma que este correo es tuyo:</p>
-          <p><a href="${verifyUrl}">Verificar mi cuenta</a></p>
-          <p style="font-size:12px;color:#666">
-            Este enlace caduca en 24 horas.
-          </p>
-        </div>
-      `,
+      html: `...`,
     });
+
+    console.log("RESEND DATA:", data);
+    console.log("RESEND ERROR:", error);
+
+    if (error) {
+      return NextResponse.json(
+        { error: "Email delivery failed", details: error },
+        { status: 500 }
+      );
+    }
+
 
 
     return NextResponse.json(
