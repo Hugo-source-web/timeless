@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 
 export default function LoginForm() {
-  const [loading, setLoading] = useState(false);
   const [isRegister, setIsRegister] = useState(false);
 
   const [form, setForm] = useState({
@@ -18,6 +17,11 @@ export default function LoginForm() {
 
   const router = useRouter();
 
+  const [error, setError] = useState<string | null>(null);
+  const [showResend, setShowResend] = useState(false);
+  const [resending, setResending] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
@@ -25,6 +29,8 @@ export default function LoginForm() {
   async function handleLogin() {
     try {
       setLoading(true);
+      setError(null);
+      setShowResend(false);
 
       const result = await signIn("credentials", {
         redirect: false,
@@ -33,16 +39,39 @@ export default function LoginForm() {
       });
 
       if (result?.error) {
-        alert("Credenciales incorrectas");
+        if (result.error === "EMAIL_NOT_VERIFIED") {
+          setError("Debes verificar tu correo antes de iniciar sesión.");
+          setShowResend(true);
+          return;
+        }
+
+        setError("Credenciales incorrectas");
         return;
       }
 
-        router.push("/");
-        router.refresh();
-      } finally {
-        setLoading(false);
-      }
+      router.push("/");
+      router.refresh();
+    } finally {
+      setLoading(false);
+    }
   }
+
+    async function handleResendVerification() {
+    try {
+      setResending(true);
+
+      await fetch("/api/auth/resend-verification", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: form.email }),
+      });
+
+      alert("Te hemos reenviado el correo de verificación. Revisa spam si no aparece.");
+    } finally {
+      setResending(false);
+    }
+  }
+
 
   async function handleRegister() {
     if (form.password !== form.confirm) {
@@ -112,6 +141,24 @@ export default function LoginForm() {
             onChange={handleChange}
             className="w-full p-3 rounded-s bg-white/5 border border-white/10 text-sm focus:outline-none focus:border-white/30"
           />
+
+          {error && (
+            <div className="bg-red-500/10 border border-red-500/30 text-red-400 text-sm p-3 rounded">
+              {error}
+            </div>
+          )}
+
+          {showResend && (
+            <button
+              type="button"
+              onClick={handleResendVerification}
+              disabled={resending}
+              className="w-full p-3 bg-white/5 hover:bg-white/10 rounded border border-white/20 text-sm transition"
+            >
+              {resending ? "Reenviando..." : "Reenviar correo de verificación"}
+            </button>
+          )}
+
 
           <button
             type="button"

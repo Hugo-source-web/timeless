@@ -26,10 +26,15 @@ export async function GET(req: Request) {
     );
   }
 
-  await prisma.user.update({
-    where: { email },
-    data: { emailVerified: new Date() },
-  });
+    await prisma.user.update({
+    where: {
+        email,
+        emailVerified: null,
+    },
+    data: {
+        emailVerified: new Date(),
+    },
+    });
 
   await prisma.verificationToken.delete({
     where: { token },
