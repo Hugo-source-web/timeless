@@ -44,7 +44,6 @@ export async function POST(req: Request) {
 
     const hashed = await hash(password, 12);
 
-    // Role logic stays the same
     let role: UserRole = UserRole.CUSTOMER;
 
     if (employeeCode && employeeCode.startsWith("id-")) {
@@ -54,18 +53,15 @@ export async function POST(req: Request) {
       }
     }
 
-    // 1️⃣ Create UNVERIFIED user
     await prisma.user.create({
       data: {
         name,
         email,
         passwordHash: hashed,
         role,
-        // emailVerified remains null
       },
     });
 
-    // 2️⃣ Create verification token
     const token = randomBytes(32).toString("hex");
     const expires = new Date(Date.now() + 1000 * 60 * 60 * 24); // 24h
 
@@ -77,7 +73,6 @@ export async function POST(req: Request) {
       },
     });
 
-    // 3️⃣ Send verification email
     const verifyUrl = buildVerifyUrl(email, token);
 
     await resend.emails.send({
@@ -96,7 +91,6 @@ export async function POST(req: Request) {
       `,
     });
 
-    // 4️⃣ Respond success (but NOT logged in yet)
     return NextResponse.json(
       { success: true, message: "Verification email sent" },
       { status: 201 }
