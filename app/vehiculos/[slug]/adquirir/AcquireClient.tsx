@@ -6,11 +6,38 @@ import { neue2, neue6 } from "@/public/fonts/neuePlak";
 export default function AcquireClient({ vehicle }: any) {
   const [confirmed, setConfirmed] = useState(false);
 
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+
   const reservationPercent = 0.05;
   const reservationAmount = Math.round(vehicle.price * reservationPercent);
   const remainingAmount = vehicle.price - reservationAmount;
 
   const heroImage = vehicle.media?.[0]?.url ?? "/placeholder.jpg";
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    await fetch("/api/acquire", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            name,
+            surname,
+            email,
+            phone,
+            brand: vehicle.brand,
+            model: vehicle.model,
+            price: vehicle.price,
+            reservationAmount,
+            slug: vehicle.slug,
+        }),
+    });
+
+    setConfirmed(true);
+    };
 
   if (confirmed) {
     return (
@@ -31,7 +58,7 @@ export default function AcquireClient({ vehicle }: any) {
 
           <a
             href={`/vehiculos/${vehicle.slug}`}
-            className="inline-block mt-6 px-8 py-3 border border-black rounded-md hover:bg-black hover:text-white transition"
+            className="inline-block mt-6 px-8 py-3 border border-black text-black rounded-md hover:bg-black hover:text-white transition"
           >
             Volver al vehículo
           </a>
@@ -110,35 +137,44 @@ export default function AcquireClient({ vehicle }: any) {
             </h3>
 
             <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                setConfirmed(true);
-              }}
+              onSubmit={handleSubmit}
               className="grid grid-cols-1 gap-6 placeholder-black"
             >
               <input
                 required
                 placeholder="Nombre"
-                className="border border-gray-300 px-4 py-3 rounded-md focus:outline-none focus:border-black"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="border border-gray-300 px-4 py-3 rounded-md focus:outline-none focus:border-black placeholder-black"
               />
+
 
               <input
                 required
                 placeholder="Apellidos"
-                className="border border-gray-300 px-4 py-3 rounded-md focus:outline-none focus:border-black"
+                value={surname}
+                onChange={(e) => setSurname(e.target.value)}
+                className="border border-gray-300 px-4 py-3 rounded-md focus:outline-none focus:border-black placeholder-black"
               />
+
 
               <input
                 required
                 type="email"
                 placeholder="Correo electrónico"
-                className="border border-gray-300 px-4 py-3 rounded-md focus:outline-none focus:border-black"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="border border-gray-300 px-4 py-3 rounded-md focus:outline-none focus:border-black placeholder-black"
               />
+
 
               <input
                 placeholder="Teléfono"
-                className="border border-gray-300 px-4 py-3 rounded-md focus:outline-none focus:border-black"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className="border border-gray-300 px-4 py-3 rounded-md focus:outline-none focus:border-black placeholder-black"
               />
+
 
               <label className="flex items-center gap-2 text-sm text-gray-500">
                 <input type="checkbox" required />

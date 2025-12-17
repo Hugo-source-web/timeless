@@ -70,7 +70,12 @@ export default function Sidebar() {
 
     const res = await fetch(url);
     const data = await res.json();
-    setVehicles(data);
+    console.log("SIDEBAR VEHICLES:", data);
+    const visibleVehicles = data.filter(
+      (v: any) => v.availability !== "SOLD"
+    );
+
+    setVehicles(visibleVehicles);
   }
 
 

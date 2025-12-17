@@ -22,7 +22,12 @@ export default function SearchPage() {
   async function loadVehicles() {
     const res = await fetch(`/api/vehicles?dealerId=${selectedDealer?.id}`);
     const data = await res.json();
-    setVehicles(data);
+
+    const visibleVehicles = data.filter(
+      (v: any) => v.availability !== "SOLD"
+    );
+
+    setVehicles(visibleVehicles);
   }
 
   loadVehicles();

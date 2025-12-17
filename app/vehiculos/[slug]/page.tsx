@@ -204,7 +204,10 @@ export default async function VehiclePage(props: VehiclePageProps) {
           )}
 
           {/* BUTTON GROUP */}
-         <VehicleActions slug={slug} />
+         <VehicleActions
+          slug={vehicle.slug}
+          availability={vehicle.availability}
+         />
 
         </div>
       </section>
