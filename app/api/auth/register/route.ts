@@ -76,7 +76,7 @@ export async function POST(req: Request) {
     const verifyUrl = buildVerifyUrl(email, token);
 
     await resend.emails.send({
-      from: "Timeless <no-reply@your-domain.com>",
+      from: "Timeless <noreply@resend.dev>",
       to: email,
       subject: "Verifica tu cuenta en Timeless",
       html: `
@@ -90,6 +90,7 @@ export async function POST(req: Request) {
         </div>
       `,
     });
+
 
     return NextResponse.json(
       { success: true, message: "Verification email sent" },
