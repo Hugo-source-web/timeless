@@ -85,8 +85,33 @@ export async function POST(req: Request) {
       from: "noreply@resend.dev",
       to: email,
       subject: "Verifica tu cuenta en Timeless",
-      html: `...`,
+      html: `
+        <div style="font-family:system-ui, -apple-system, BlinkMacSystemFont, sans-serif; line-height:1.5">
+          <h2>Verificación de correo</h2>
+          <p>Gracias por registrarte en <strong>Timeless</strong>.</p>
+          <p>Para activar tu cuenta, confirma que este correo es tuyo:</p>
+          <p style="margin:16px 0">
+            <a href="${verifyUrl}" style="
+              display:inline-block;
+              padding:10px 16px;
+              background:#111;
+              color:#fff;
+              text-decoration:none;
+              border-radius:6px;
+            ">
+              Verificar mi cuenta
+            </a>
+          </p>
+          <p style="font-size:12px;color:#666">
+            Este enlace caduca en 24 horas.
+          </p>
+          <p style="font-size:12px;color:#666">
+            Si no solicitaste esta cuenta, puedes ignorar este mensaje.
+          </p>
+        </div>
+      `,
     });
+
 
     console.log("RESEND DATA:", data);
     console.log("RESEND ERROR:", error);
