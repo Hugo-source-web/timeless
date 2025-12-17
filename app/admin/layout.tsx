@@ -36,6 +36,9 @@ export default async function AdminLayout({
           <a href="/admin/users" className="hover:text-white transition-colors">
             Usuarios
           </a>
+          <a href="/admin/dealerships" className="hover:text-white transition-colors">
+            Concesionarios
+          </a>
         </nav>
       </aside>
 

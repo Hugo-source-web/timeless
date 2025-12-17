@@ -83,45 +83,14 @@ export default async function NewVehiclePage() {
           />
         </div>
 
-        {/* Thumbnail */}
-        <div className="flex flex-col gap-2">
-          <label className="font-medium">Miniatura (opcional)</label>
-          <input
-            name="thumbnail"
-            type="file"
-            accept="image/*"
-            className="bg-neutral-800 p-2 rounded"
-          />
-          <p className="text-xs text-neutral-500">
-            Si no se selecciona, se usará la primera imagen como miniatura.
-          </p>
-        </div>
-
-        {/* Images */}
-        <div className="flex flex-col gap-2">
-          <label className="font-medium">Imágenes</label>
-          <input
-            name="images"
-            type="file"
-            accept="image/*"
-            multiple
-            className="bg-neutral-800 p-2 rounded"
-            required
-          />
-          <p className="text-xs text-neutral-500">
-            Selecciona varias imágenes para la galería del vehículo.
-          </p>
-        </div>
-
-        {/* Video */}
-        <div className="flex flex-col gap-2">
-          <label className="font-medium">Video (opcional)</label>
-          <input
-            name="video"
-            type="file"
-            accept="video/*"
-            className="bg-neutral-800 p-2 rounded"
-          />
+        {/* Media notice */}
+        <div className="rounded border border-neutral-800 bg-neutral-950 p-4 text-sm text-neutral-400">
+          La carga de imágenes y vídeos no está disponible actualmente desde la
+          interfaz de administración.  
+          Los recursos multimedia se añaden manualmente al proyecto.  
+          Como mejora futura, se prevé integrar almacenamiento externo
+          (Vercel Blob o Cloudflare R2) para permitir subidas directas en
+          entornos serverless.
         </div>
 
         {/* Submit */}

@@ -15,6 +15,17 @@ import { useEffect, useState } from "react";
 import type { Vehicle, MediaAsset } from "@prisma/client";
 import { useSession } from "next-auth/react";
 
+const financingRouteMap: Record<string, string> = {
+
+  "Estimación": "/financing/loan-calculator/estimacion",
+  "Comparador": "/financing/loan-calculator/comparador",
+  "Tabla de intereses": "/financing/loan-calculator/tabla-de-intereses",
+
+  "Requisitos": "/financing/apply-now/requisitos",
+  "Solicitar ahora": "/financing/apply-now/solicitar-ahora",
+  "Documentos necesarios": "/financing/apply-now/documentos-necesarios",
+};
+
 type VehicleWithMedia = Vehicle & { media: MediaAsset[] };
 
 const containerVariants: Variants = {
@@ -296,6 +307,13 @@ export default function Sidebar() {
                                 <motion.button
                                   key={op}
                                   variants={itemVariants}
+                                  onClick={() => {
+                                    const route = financingRouteMap[op];
+                                    if (route) {
+                                      router.push(route);
+                                      close();
+                                    }
+                                  }}
                                   className="text-left px-4 py-2 rounded transition-colors duration-200 hover:text-black/70"
                                 >
                                   {op}
