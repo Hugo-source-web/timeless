@@ -3,38 +3,22 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-export async function DELETE(req: Request) {
+export async function DELETE() {
   const session = await getServerSession(authOptions);
 
   if (!session?.user?.id) {
-    return NextResponse.json({ error: "No autorizado" }, { status: 401 });
-  }
-
-  const body = await req.json().catch(() => null);
-  const targetUserId = body?.userId
-    ? Number(body.userId)
-    : Number(session.user.id);
-
-  const requesterId = Number(session.user.id);
-  const requesterRole = session.user.role;
-
-  if (targetUserId !== requesterId && requesterRole !== "ADMIN") {
     return NextResponse.json(
-      { error: "Permisos insuficientes" },
-      { status: 403 }
+      { error: "No autorizado" },
+      { status: 401 }
     );
   }
 
-  if (targetUserId === requesterId && body?.userId) {
-    return NextResponse.json(
-      { error: "No puedes eliminar tu propia cuenta desde el panel admin" },
-      { status: 400 }
-    );
-  }
+  const userId = Number(session.user.id);
 
   try {
+    // If user has reserved vehicles, release them
     await prisma.vehicle.updateMany({
-      where: { reservedByUserId: targetUserId },
+      where: { reservedByUserId: userId },
       data: {
         reservedByUserId: null,
         reservedUntil: null,
@@ -42,15 +26,16 @@ export async function DELETE(req: Request) {
       },
     });
 
+    // Delete user (accounts, sessions, authenticators cascade)
     await prisma.user.delete({
-      where: { id: targetUserId },
+      where: { id: userId },
     });
 
     return new NextResponse(null, { status: 204 });
-  } catch (error) {
-    console.error("Delete user error:", error);
+  } catch (err) {
+    console.error("Error deleting account:", err);
     return NextResponse.json(
-      { error: "No se pudo eliminar el usuario" },
+      { error: "No se pudo eliminar la cuenta" },
       { status: 500 }
     );
   }

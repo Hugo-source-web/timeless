@@ -80,8 +80,6 @@ export default async function NewVehiclePage() {
           <input name="heroSubtitle" placeholder="Hero subtitle" className="bg-neutral-800 p-2 rounded" />
         </div>
 
-        <input name="heroVideoUrl" placeholder="Hero video URL" className="bg-neutral-800 p-2 rounded" />
-
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <input name="heroTaglineTitle" placeholder="Tagline título" className="bg-neutral-800 p-2 rounded" />
           <textarea name="heroTaglineBody" rows={2} className="bg-neutral-800 p-2 rounded resize-none" />
