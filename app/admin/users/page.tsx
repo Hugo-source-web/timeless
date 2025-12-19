@@ -34,16 +34,34 @@ export async function updateRole(formData: FormData) {
 
 
 export async function deleteUser(formData: FormData) {
-  const session = await requireAdmin();
+  const session = await getServerSession(authOptions);
+
+  if (!session?.user?.id || session.user.role !== "ADMIN") {
+    throw new Error("No autorizado.");
+  }
 
   const id = Number(formData.get("id"));
   const currentUserId = Number(session.user.id);
+
+  if (!id) {
+    throw new Error("ID de usuario inválido.");
+  }
 
   if (id === currentUserId) {
     throw new Error("No puedes eliminar tu propia cuenta.");
   }
 
-  await prisma.user.delete({ where: { id } });
+  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/account/delete`, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ userId: id }),
+    cache: "no-store",
+  });
+
+  if (!res.ok) {
+    throw new Error("No se pudo eliminar el usuario.");
+  }
+
   redirect("/admin/users");
 }
 

@@ -47,11 +47,23 @@ export default function AccountSection({ user }: { user: Session["user"] }) {
   }
 
   async function deleteAccount() {
-    const sure = confirm("¿Seguro que deseas eliminar tu cuenta?");
+    const sure = confirm(
+      "¿Seguro que deseas eliminar tu cuenta? Esta acción es irreversible."
+    );
     if (!sure) return;
+
+    const res = await fetch("/api/account/delete", {
+      method: "DELETE",
+    });
+
+    if (!res.ok) {
+      alert("No se pudo eliminar la cuenta");
+      return;
+    }
 
     await handleLogout();
   }
+
 
   return (
     <div className="space-y-10 max-w-md">
